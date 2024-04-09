@@ -1,0 +1,105 @@
+@import "theme-editor.css";
+html {
+    --color-primary: #e6ffff;
+    --color-accent: #80ffff;
+}
+
+
+.chore_grid {
+    display: grid;
+    grid-template-columns: repeat(8, 110px);
+    gap: 0.5rem;
+    justify-items: center;
+    overflow-x: scroll;
+    max-width: 100%;
+    padding: 0.5rem
+}
+
+.chores_container {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-template-rows: subgrid;
+    justify-items: inherit;
+
+    &.empty {
+        border: none;
+    }
+}
+
+.chore_box {
+    row-span: 1;
+    width: 90px;
+    display: flex;
+    flex-direction: column;
+    padding: 0.25rem;
+    background: var(--color-primary);
+    border-radius: 0.25rem;
+    align-items: center;
+    gap: 0.1rem;
+    box-shadow: 5px 5px 10px lightgray;
+
+    &.empty {
+        background: lightgray;
+    }
+
+    &.chore_title {
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background: white;
+    }
+}
+
+.chore_box > vaadin-icon {
+    align-self: flex-end;
+    cursor: pointer;
+
+    &.disabled {
+        fill-opacity: 0.5;
+        cursor: auto;
+    }
+}
+
+.chore_box > :last-child {
+    padding: 0.25rem;
+    border-radius: 100vw;
+    background: var(--color-accent);
+    aspect-ratio: 2;
+    text-align: center;
+}
+
+.date_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.25rem;
+
+    :first-child {
+        font-weight: 700;
+    }
+}
+
+.control_container {
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    place-items: center;
+}
+
+@media(max-width: 600px) {
+    .control_container {
+        grid-template-columns: 1fr 1fr;
+
+        & > vaadin-button {
+            grid-row: 2 / 3;
+        }
+
+        & > div {
+            grid-column: 1 / 3;
+        }
+
+    }
+}
