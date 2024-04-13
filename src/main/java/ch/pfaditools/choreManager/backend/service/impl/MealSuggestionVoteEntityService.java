@@ -24,12 +24,12 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
         ServiceResponse<MealSuggestionVoteEntity> response = new ServiceResponse<>();
         if (user == null) {
             response.setOperationSuccessful(false);
-            response.setErrorMessage("mealSuggestionVoteService.error.userNull");
+            response.setErrorMessage("mealSuggestionVoteEntityService.error.userNull");
             return response;
         }
         if (mealSuggestion == null) {
             response.setOperationSuccessful(false);
-            response.setErrorMessage("mealSuggestionVoteService.error.mealSuggestionNull");
+            response.setErrorMessage("mealSuggestionVoteEntityService.error.mealSuggestionNull");
             return response;
         }
 
@@ -37,12 +37,12 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
             Optional<MealSuggestionVoteEntity> mealSuggestionVote = mealSuggestionVoteRepository.findByVotedByAndMealSuggestion(user, mealSuggestion);
             if (mealSuggestionVote.isEmpty()) {
                 response.setOperationSuccessful(false);
-                response.setErrorMessage("suggestedFor.error.noSuchMealSuggestionVote");
+                response.setErrorMessage("mealSuggestionVoteEntityService.error.noSuchMealSuggestionVote");
                 return response;
             }
             response.setOperationSuccessful(true);
             response.addBusinessObject(mealSuggestionVote.get());
-            response.setInfoMessage("suggestedFor.message.getByPersonAndMealSuggestion");
+            response.setInfoMessage("mealSuggestionVoteEntityService.message.getByPersonAndMealSuggestion");
         } catch (Exception e) {
             catchException(response, e);
         }
@@ -54,7 +54,7 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
         ServiceResponse<MealSuggestionVoteEntity> response = new ServiceResponse<>();
         if (id == null) {
             response.setOperationSuccessful(false);
-            response.setErrorMessage("mealSuggestionVoteService.error.idNull");
+            response.setErrorMessage("mealSuggestionVoteEntityService.error.idNull");
             return response;
         }
 
@@ -62,12 +62,12 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
             Optional<MealSuggestionVoteEntity> mealSuggestionVote = mealSuggestionVoteRepository.findById(id);
             if (mealSuggestionVote.isEmpty()) {
                 response.setOperationSuccessful(false);
-                response.setErrorMessage("mealSuggestionVoteService.error.noSuchMealSuggestionVote");
+                response.setErrorMessage("mealSuggestionVoteEntityService.error.noSuchMealSuggestionVote");
                 return response;
             }
             response.setOperationSuccessful(true);
             response.addBusinessObject(mealSuggestionVote.get());
-            response.setInfoMessage("mealSuggestionVoteService.message.getById");
+            response.setInfoMessage("mealSuggestionVoteEntityService.message.getById");
         } catch (Exception e) {
             catchException(response, e);
         }
@@ -80,12 +80,12 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
         try {
             List<MealSuggestionVoteEntity> mealSuggestionVotes = mealSuggestionVoteRepository.findAll();
             if (mealSuggestionVotes.isEmpty()) {
-                response.setErrorMessage("mealSuggestionVoteService.error.noMealSuggestionVotesFound");
+                response.setErrorMessage("mealSuggestionVoteEntityService.error.noMealSuggestionVotesFound");
                 return response;
             }
             response.setOperationSuccessful(true);
             response.setBusinessObjects(mealSuggestionVotes);
-            response.setInfoMessage("mealSuggestionVoteService.message.getAll");
+            response.setInfoMessage("mealSuggestionVoteEntityService.message.getAll");
         } catch (Exception e) {
             catchException(response, e);
         }
@@ -97,19 +97,19 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
         ServiceResponse<MealSuggestionVoteEntity> response = new ServiceResponse<>();
         if (entity == null) {
             response.setOperationSuccessful(false);
-            response.setErrorMessage("mealSuggestionVoteService.error.delete.entityNull");
+            response.setErrorMessage("mealSuggestionVoteEntityService.error.delete.entityNull");
             return response;
         }
         if (entity.getId() == null) {
             response.setOperationSuccessful(false);
-            response.setErrorMessage("mealSuggestionVoteService.error.delete.idNull");
+            response.setErrorMessage("mealSuggestionVoteEntityService.error.delete.idNull");
             return response;
         }
 
         try {
             mealSuggestionVoteRepository.delete(entity);
             response.setOperationSuccessful(true);
-            response.setInfoMessage("mealSuggestionVoteService.message.delete");
+            response.setInfoMessage("mealSuggestionVoteEntityService.message.delete");
             return response;
         } catch (Exception e) {
             catchException(response, e);
@@ -122,7 +122,7 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
         ServiceResponse<MealSuggestionVoteEntity> response = new ServiceResponse<>();
         if (entity == null) {
             response.setOperationSuccessful(false);
-            response.setInfoMessage("mealSuggestionVoteService.error.save.entityNull");
+            response.setInfoMessage("mealSuggestionVoteEntityService.error.save.entityNull");
             return response;
         }
         if (entity.getId() == null) {
@@ -133,7 +133,7 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
             MealSuggestionVoteEntity savedMealSuggestionVote = mealSuggestionVoteRepository.save(entity);
             response.addBusinessObject(savedMealSuggestionVote);
             response.setOperationSuccessful(true);
-            response.setInfoMessage("mealSuggestionVoteService.message.save");
+            response.setInfoMessage("mealSuggestionVoteEntityService.message.save");
         } catch (Exception e) {
             catchException(response, e);
         }
@@ -142,6 +142,6 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
 
     private void catchException(ServiceResponse<MealSuggestionVoteEntity> response, Exception e) {
         response.setOperationSuccessful(false);
-        response.setErrorMessage("mealSuggestionVoteService.error.general");
+        response.setErrorMessage("mealSuggestionVoteEntityService.error.general");
     }
 }
