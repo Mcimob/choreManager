@@ -9,6 +9,7 @@ import ch.pfaditools.choreManager.model.GroupChoreRegistrationEntity;
 import ch.pfaditools.choreManager.model.GroupEntity;
 import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
+import ch.pfaditools.choreManager.util.DateUtils;
 import ch.pfaditools.choreManager.util.Notifier;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.button.Button;
@@ -117,7 +118,7 @@ public class MainView extends VerticalLayout {
         for (int i = 0; i < weekdays.length; i++) {
             Div dateContainer = new Div(
                     new Div(weekdays[i]),
-                    new Div(currentMonday.plusDays(i).format(DateTimeFormatter.ofPattern("dd.MM"))));
+                    new Div(DateUtils.formatDateShort(currentMonday.plusDays(i))));
             dateContainer.addClassName("date_container");
             choreGrid.add(dateContainer);
         }

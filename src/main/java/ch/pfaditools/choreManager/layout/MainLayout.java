@@ -11,10 +11,12 @@ import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.icon.SvgIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class MainLayout extends AppLayout {
@@ -22,30 +24,42 @@ public class MainLayout extends AppLayout {
 
     public MainLayout(SecurityService securityService) {
         this.securityService = securityService;
+        UserEntity user = securityService.getAuthenticatedUser().get();
         createHeader();
-        createDrawer();
+        if ("ADMIN".equals(user.getRole())) {
+            createDrawer();
+        }
     }
 
     private void createHeader() {
-        H1 logo = new H1("pageTitle");
-        logo.addClassNames(
-                LumoUtility.FontSize.LARGE,
-                LumoUtility.Margin.MEDIUM);
+        UserEntity user = securityService.getAuthenticatedUser().get();
 
         String u = securityService.getAuthenticatedUser().get().getUsername();
         Button logout = new Button("Log out " + u, e -> securityService.logout());
 
-        var header = new HorizontalLayout(new DrawerToggle(), logout);
+        SvgIcon choreIcon = getSvgIcon("clean-svgrepo-com");
+        SvgIcon mealIcon = getSvgIcon("restaurant-svgrepo-com");
+        Button choreButton = new Button(choreIcon);
+        choreButton.addClickListener(click -> choreButton.getUI().ifPresent(ui -> ui.navigate("")));
+        Button mealButton = new Button(mealIcon);
+        mealButton.addClickListener(click -> mealButton.getUI().ifPresent(ui -> ui.navigate("mealView")));
+        var header = new HorizontalLayout();
+        if ("ADMIN".endsWith(user.getRole())) {
+            header.add(new DrawerToggle());
+        }
+        header.add(new HorizontalLayout(choreButton, mealButton), logout);
 
         header.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
-        header.expand(logo);
         header.setWidthFull();
         header.addClassNames(
                 LumoUtility.Padding.Vertical.NONE,
                 LumoUtility.Padding.Horizontal.MEDIUM);
-        addToNavbar(header);
+        addToNavbar(true, header);
+    }
 
+    private SvgIcon getSvgIcon(String iconName) {
+        return new SvgIcon("/icons/%s.svg".formatted(iconName));
     }
 
     private void createDrawer() {
