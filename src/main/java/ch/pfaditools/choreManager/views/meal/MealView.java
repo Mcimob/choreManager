@@ -62,6 +62,9 @@ public class MealView extends VerticalLayout {
 
         H1 title = new H1(getTranslation("mealView.title"));
         title.getStyle().setTextAlign(Style.TextAlign.CENTER);
+        title.getStyle().setPaddingRight("2rem");
+        title.getStyle().setPaddingLeft("2rem");
+        title.getStyle().setPaddingTop("1rem");
 
         add(title,
                 datePickerLayout,
