@@ -129,6 +129,14 @@ html {
             background: #6ef054;
         }
     }
+}
 
-
+.mealView__sticky {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
 }

@@ -55,7 +55,15 @@ public class MealView extends VerticalLayout {
     }
 
     private void setupLayout() {
-        add(new H1(getTranslation("mealView.title")),
+        datePickerLayout.addClassName("mealView__sticky");
+
+        suggestionLayout.getStyle().setPaddingLeft("2rem");
+        suggestionLayout.getStyle().setPaddingRight("2rem");
+
+        H1 title = new H1(getTranslation("mealView.title"));
+        title.getStyle().setTextAlign(Style.TextAlign.CENTER);
+
+        add(title,
                 datePickerLayout,
                 suggestionLayout,
                 suggestionPickerLayout);
@@ -63,6 +71,7 @@ public class MealView extends VerticalLayout {
         this.getStyle().setAlignItems(Style.AlignItems.CENTER);
         this.setMaxWidth("800px");
         this.setWidthFull();
+        this.setPadding(false);
     }
 
     private void setupGroupSelect() {
@@ -91,6 +100,7 @@ public class MealView extends VerticalLayout {
 
         datePickerLayout.add(previousButton, dateText, nextButton);
         datePickerLayout.setAlignItems(Alignment.CENTER);
+        datePickerLayout.setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
     private void updateDatePicker() {
