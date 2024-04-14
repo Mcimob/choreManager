@@ -77,4 +77,10 @@ public class RegistrationForm extends FormLayout {
         });
     }
 
+
+
+    public TextField getGroupField() {
+        return groupField;
+    }
+
 }

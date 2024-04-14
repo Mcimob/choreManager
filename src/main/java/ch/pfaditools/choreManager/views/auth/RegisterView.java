@@ -5,14 +5,14 @@ import ch.pfaditools.choreManager.security.service.UserEntityDetailsService;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("register")
 @PageTitle("Register")
 @AnonymousAllowed
-public class RegisterView extends VerticalLayout {
+public class RegisterView extends VerticalLayout implements HasUrlParameter<String> {
 
     private RegistrationForm registrationForm;
 
@@ -27,6 +27,15 @@ public class RegisterView extends VerticalLayout {
         setHeightFull();
         registrationForm.setMaxWidth("300px");
         add(new Div(registrationForm));
+    }
+
+    @Override
+    public void setParameter(BeforeEvent event, @OptionalParameter String parameter) {
+        if (parameter != null) {
+            TextField groupField = registrationForm.getGroupField();
+            groupField.setValue(parameter);
+            groupField.setEnabled(false);
+        }
     }
 
 
