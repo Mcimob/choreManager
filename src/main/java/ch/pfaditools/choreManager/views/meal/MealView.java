@@ -43,6 +43,7 @@ public class MealView extends VerticalLayout implements HasDynamicTitle {
     private GroupEntity selectedGroup;
     private LocalDate currentDate = LocalDate.now();
     private final Text dateText = new Text("");
+    private final Text weekdayText = new Text("");
     private final HorizontalLayout datePickerLayout = new HorizontalLayout();
     private final VerticalLayout suggestionLayout = new VerticalLayout();
     private final Div suggestionPickerLayout = new Div();
@@ -103,13 +104,17 @@ public class MealView extends VerticalLayout implements HasDynamicTitle {
         });
         updateDatePicker();
 
-        datePickerLayout.add(previousButton, dateText, nextButton);
+        VerticalLayout dateLayout = new VerticalLayout(new Div(dateText), new Div(weekdayText));
+        dateLayout.getStyle().setAlignItems(Style.AlignItems.CENTER);
+
+        datePickerLayout.add(previousButton, dateLayout, nextButton);
         datePickerLayout.setAlignItems(Alignment.CENTER);
         datePickerLayout.setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
     private void updateDatePicker() {
         dateText.setText(DateUtils.formatDateShort(currentDate));
+        weekdayText.setText(DateUtils.formatDateWeekday(currentDate));
         updateMealSuggestions();
     }
 
