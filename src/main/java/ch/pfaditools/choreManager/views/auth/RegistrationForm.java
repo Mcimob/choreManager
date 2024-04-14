@@ -20,7 +20,11 @@ import com.vaadin.flow.data.binder.ValidationException;
 import java.util.regex.Pattern;
 
 public class RegistrationForm extends FormLayout {
-    private static final String PASSWORD_REGEX = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$";
+    private static final String ONE_DIGIT = ".*[0-9].*";
+    private static final String LOWER_CASE = ".*[a-z].*";
+    private static final String UPPER_CASE = ".*[A-Z].*";
+    private static final String SPECIAL_CHAR = ".*[@#$%^&+=].*";
+    private static final String NO_SPACE = "\\S+$";
 
     private final GroupEntityService groupService;
     private final UserEntityDetailsService userService;
@@ -50,7 +54,21 @@ public class RegistrationForm extends FormLayout {
 
     private void setupBinder() {
         binder.forField(usernameField).asRequired().bind(UserEntity::getUsername, UserEntity::setUsername);
-        binder.forField(passwordField).asRequired().withValidator(pass -> Pattern.compile(PASSWORD_REGEX).matcher(pass).matches(), "").bind(UserEntity::getPassword, UserEntity::setPassword);
+        // https://www.baeldung.com/java-regex-password-validation
+        binder.forField(passwordField).asRequired()
+                .withValidator(pass -> pass.length() >= 8 && pass.length() <= 20,
+                        getTranslation("registrationView.password.validation.length"))
+                .withValidator(pass -> Pattern.compile(ONE_DIGIT).matcher(pass).matches(),
+                        getTranslation("registrationView.password.validation.oneDigit"))
+                .withValidator(pass -> Pattern.compile(LOWER_CASE).matcher(pass).matches(),
+                        getTranslation("registrationView.password.validation.lowerCase"))
+                .withValidator(pass -> Pattern.compile(UPPER_CASE).matcher(pass).matches(),
+                        getTranslation("registrationView.password.validation.upperCase"))
+                .withValidator(pass -> Pattern.compile(SPECIAL_CHAR).matcher(pass).matches(),
+                        getTranslation("registrationView.password.validation.specialChar"))
+                .withValidator(pass -> Pattern.compile(NO_SPACE).matcher(pass).matches(),
+                        getTranslation("registrationView.password.validation.noSpace"))
+                .bind(UserEntity::getPassword, UserEntity::setPassword);
     }
 
     private void setupButton() {
