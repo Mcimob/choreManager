@@ -15,6 +15,7 @@ public class UserEntity extends AbstractEntity{
     @Column(nullable = false, unique = true)
     private String username;
 
+    private String displayName;
     private String password;
 
     private String role;
@@ -58,6 +59,15 @@ public class UserEntity extends AbstractEntity{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public Set<GroupEntity> getGroups() {

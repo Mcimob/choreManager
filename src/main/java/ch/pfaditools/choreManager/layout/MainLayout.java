@@ -18,6 +18,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 
 public class MainLayout extends AppLayout {
     private final SecurityService securityService;
@@ -34,20 +35,27 @@ public class MainLayout extends AppLayout {
     private void createHeader() {
         UserEntity user = securityService.getAuthenticatedUser().get();
 
-        String u = securityService.getAuthenticatedUser().get().getUsername();
-        Button logout = new Button("Log out " + u, e -> securityService.logout());
 
+        SvgIcon profileIcon = getSvgIcon("profile-round-1342-svgrepo-com");
         SvgIcon choreIcon = getSvgIcon("clean-svgrepo-com");
         SvgIcon mealIcon = getSvgIcon("restaurant-svgrepo-com");
+        SvgIcon logoutIcon = getSvgIcon("exit-svgrepo-com");
+
+        Button profileBUtton = new Button(profileIcon);
+        profileBUtton.addClickListener(click -> profileBUtton.getUI().ifPresent(ui -> ui.navigate("profileView")));
         Button choreButton = new Button(choreIcon);
         choreButton.addClickListener(click -> choreButton.getUI().ifPresent(ui -> ui.navigate("")));
         Button mealButton = new Button(mealIcon);
         mealButton.addClickListener(click -> mealButton.getUI().ifPresent(ui -> ui.navigate("mealView")));
+        Button logoutButton = new Button(logoutIcon);
+        logoutButton.addClickListener(click -> securityService.logout());
+
+
         var header = new HorizontalLayout();
         if ("ADMIN".endsWith(user.getRole())) {
             header.add(new DrawerToggle());
         }
-        header.add(new HorizontalLayout(choreButton, mealButton), logout);
+        header.add(new HorizontalLayout(profileBUtton, choreButton, mealButton, logoutButton));
 
         header.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);

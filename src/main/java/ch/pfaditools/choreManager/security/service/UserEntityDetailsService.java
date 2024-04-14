@@ -23,6 +23,15 @@ public class UserEntityDetailsService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public void saveUserWithPassword(UserEntity user) {
+        user.setPassword(passwordEncoder.encode((user.getPassword())));
+        userRepository.save(user);
+    }
+
+    public void saveUserWithoutPassword(UserEntity user) {
+        userRepository.save(user);
+    }
+
     public void registerUser(UserEntity user) throws UsernameAlreadyExistsException{
         try {
             loadUserByUsername(user.getUsername());

@@ -249,7 +249,7 @@ public class MainView extends VerticalLayout implements HasDynamicTitle {
                 UnorderedList ul = new UnorderedList();
                 specificRegistrations.stream().
                         map(ChoreRegistrationEntity::getUser)
-                        .forEach(user -> ul.add(new ListItem(user.getUsername())));
+                        .forEach(user -> ul.add(new ListItem(user.getDisplayName())));
                 dialog.add(ul);
 
                 dialog.open();

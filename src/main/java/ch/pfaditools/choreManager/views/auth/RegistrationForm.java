@@ -79,6 +79,7 @@ public class RegistrationForm extends FormLayout {
             try {
                 UserEntity newUser = new UserEntity();
                 binder.writeBean(newUser);
+                newUser.setDisplayName(newUser.getUsername());
                 ServiceResponse<GroupEntity> groupResponse = groupService.getByCode(groupField.getValue());
                 if (!groupResponse.isOperationSuccessful()) {
                     Notifier.showErrorNotification(getTranslation(groupResponse.getErrorMessage()));

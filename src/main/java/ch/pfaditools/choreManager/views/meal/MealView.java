@@ -178,7 +178,7 @@ public class MealView extends VerticalLayout implements HasDynamicTitle {
         private void setupLayout() {
             this.addClassName("suggestion_box");
 
-            Div nameContainer = new Div(mealSuggestion.getSuggestedBy().getUsername());
+            Div nameContainer = new Div(mealSuggestion.getSuggestedBy().getDisplayName());
             nameContainer.addClassName("name_container");
 
             VerticalLayout infoContainer = new VerticalLayout(
