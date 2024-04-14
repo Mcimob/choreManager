@@ -11,6 +11,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.dom.Style;
 import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
@@ -34,6 +35,7 @@ public class ProfileView extends VerticalLayout implements HasDynamicTitle {
     }
 
     private void setupLayout() {
+        this.getStyle().setAlignItems(Style.AlignItems.CENTER);
         Div container = new Div();
         container.addClassName("profile_view_container");
 
