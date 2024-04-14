@@ -7,6 +7,7 @@ import ch.pfaditools.choreManager.exception.UsernameAlreadyExistsException;
 import ch.pfaditools.choreManager.model.GroupEntity;
 import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.util.Notifier;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -73,6 +74,7 @@ public class RegistrationForm extends FormLayout {
 
     private void setupButton() {
         registerButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        registerButton.addClickShortcut(Key.ENTER);
         registerButton.addClickListener(click -> {
             try {
                 UserEntity newUser = new UserEntity();

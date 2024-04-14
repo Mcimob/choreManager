@@ -11,6 +11,7 @@ import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.DateUtils;
 import ch.pfaditools.choreManager.util.Notifier;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -150,6 +151,7 @@ public class MealView extends VerticalLayout {
             suggestionField.clear();
             updateMealSuggestions();
         });
+        addButton.addClickShortcut(Key.ENTER);
 
         suggestionPickerLayout.add(suggestionField, addButton);
     }
