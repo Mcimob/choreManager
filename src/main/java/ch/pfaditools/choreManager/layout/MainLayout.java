@@ -85,8 +85,5 @@ public class MainLayout extends AppLayout {
 
             addToDrawer(adminLayout);
         }
-        addToDrawer(new VerticalLayout(
-                new RouterLink(getTranslation("mainView.title"), MainView.class)
-        ));
     }
 }
