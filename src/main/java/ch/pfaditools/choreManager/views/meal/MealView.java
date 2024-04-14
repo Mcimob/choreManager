@@ -23,6 +23,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.dom.Style;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
@@ -33,7 +34,7 @@ import java.util.Optional;
 
 @Route(value = "mealView", layout = MainLayout.class)
 @PermitAll
-public class MealView extends VerticalLayout {
+public class MealView extends VerticalLayout implements HasDynamicTitle {
     private final SecurityService securityService;
     private final IMealSuggestionsEntityService mealService;
     private final IMealSuggestionVoteEntityService mealVoteService;
@@ -154,6 +155,11 @@ public class MealView extends VerticalLayout {
         addButton.addClickShortcut(Key.ENTER);
 
         suggestionPickerLayout.add(suggestionField, addButton);
+    }
+
+    @Override
+    public String getPageTitle() {
+        return getTranslation("mealView.title");
     }
 
     private class SuggestionBox extends Div {

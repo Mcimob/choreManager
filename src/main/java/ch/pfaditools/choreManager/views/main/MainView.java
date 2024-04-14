@@ -23,6 +23,7 @@ import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
@@ -36,7 +37,7 @@ import java.util.Set;
 
 @Route(value = "", layout = MainLayout.class)
 @PermitAll
-public class MainView extends VerticalLayout {
+public class MainView extends VerticalLayout implements HasDynamicTitle {
 
     private final static String[] weekdays = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
     private final IChoreRegistrationEntityService choreRegistrationService;
@@ -158,6 +159,11 @@ public class MainView extends VerticalLayout {
     private void setSelectedGroup(AbstractField.ComponentValueChangeEvent<Select<GroupEntity>, GroupEntity> change) {
         this.selectedGroup = change.getValue();
         setupChoreGrid();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return getTranslation("mainView.title");
     }
 
     private class ChoreBox extends Div {

@@ -8,6 +8,7 @@ import ch.pfaditools.choreManager.util.Notifier;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Route(value = "chore", layout = MainLayout.class)
 @PermitAll
-public class ChoreView extends VerticalLayout {
+public class ChoreView extends VerticalLayout implements HasDynamicTitle {
 
     private final IChoreEntityService choreService;
     private final Grid<ChoreEntity> choreGrid = new Grid<>();
@@ -57,4 +58,8 @@ public class ChoreView extends VerticalLayout {
         add(title, choreGrid, choreForm);
     }
 
+    @Override
+    public String getPageTitle() {
+        return getTranslation("choreView.title");
+    }
 }

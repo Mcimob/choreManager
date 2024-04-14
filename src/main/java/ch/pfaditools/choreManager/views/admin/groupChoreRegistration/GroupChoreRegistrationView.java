@@ -10,6 +10,7 @@ import ch.pfaditools.choreManager.util.Notifier;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @Route(value = "groupChoreRegistration", layout = MainLayout.class)
 @PermitAll
-public class GroupChoreRegistrationView extends VerticalLayout {
+public class GroupChoreRegistrationView extends VerticalLayout implements HasDynamicTitle {
     private final IGroupChoreRegistrationEntityService groupRegistrationService;
     private final Grid<GroupChoreRegistrationEntity> grid = new Grid<>();
     private final GroupRegistrationForm groupRegistrationForm;
@@ -63,5 +64,10 @@ public class GroupChoreRegistrationView extends VerticalLayout {
     private void setupLayout() {
         H1 title = new H1(getTranslation("groupChoreRegistrationView.title"));
         add(title, grid, groupRegistrationForm);
+    }
+
+    @Override
+    public String getPageTitle() {
+        return getTranslation("groupChoreRegistrationView.title");
     }
 }

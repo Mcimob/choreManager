@@ -8,6 +8,7 @@ import ch.pfaditools.choreManager.util.Notifier;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.PermitAll;
 
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Route(value = "group", layout = MainLayout.class)
 @PermitAll
-public class GroupView extends VerticalLayout {
+public class GroupView extends VerticalLayout implements HasDynamicTitle {
     private final IGroupEntityService groupService;
     private final Grid<GroupEntity> groupGrid = new Grid<>();
     private final GroupForm groupForm;
@@ -55,5 +56,10 @@ public class GroupView extends VerticalLayout {
     private void setupLayout() {
         H1 title = new H1(getTranslation("groupView.title"));
         add(title, groupGrid, groupForm);
+    }
+
+    @Override
+    public String getPageTitle() {
+        return getTranslation("groupView.title");
     }
 }

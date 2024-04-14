@@ -10,9 +10,8 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("register")
-@PageTitle("Register")
 @AnonymousAllowed
-public class RegisterView extends VerticalLayout implements HasUrlParameter<String> {
+public class RegisterView extends VerticalLayout implements HasUrlParameter<String>, HasDynamicTitle {
 
     private RegistrationForm registrationForm;
 
@@ -39,4 +38,8 @@ public class RegisterView extends VerticalLayout implements HasUrlParameter<Stri
     }
 
 
+    @Override
+    public String getPageTitle() {
+        return getTranslation("registerView.title");
+    }
 }
