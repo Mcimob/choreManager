@@ -103,4 +103,13 @@ public class UserEntity extends AbstractEntity{
     public int hashCode() {
         return Objects.hash(id, username, password, role);
     }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

@@ -4,7 +4,9 @@ import ch.pfaditools.choreManager.backend.service.IGroupEntityService;
 import ch.pfaditools.choreManager.backend.service.ServiceResponse;
 import ch.pfaditools.choreManager.layout.MainLayout;
 import ch.pfaditools.choreManager.model.GroupEntity;
+import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.Notifier;
+import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -16,12 +18,13 @@ import java.util.Optional;
 
 @Route(value = "group", layout = MainLayout.class)
 @PermitAll
-public class GroupView extends VerticalLayout implements HasDynamicTitle {
+public class GroupView extends AbstractView implements HasDynamicTitle {
     private final IGroupEntityService groupService;
     private final Grid<GroupEntity> groupGrid = new Grid<>();
     private final GroupForm groupForm;
 
-    public GroupView(IGroupEntityService groupService) {
+    public GroupView(IGroupEntityService groupService, SecurityService securityService) {
+        super(securityService, "groupView");
         this.groupService = groupService;
         this.groupForm = new GroupForm(this, groupService);
         setupLayout();

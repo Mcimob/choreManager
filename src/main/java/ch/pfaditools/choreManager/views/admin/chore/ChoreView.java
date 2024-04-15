@@ -4,7 +4,9 @@ import ch.pfaditools.choreManager.backend.service.IChoreEntityService;
 import ch.pfaditools.choreManager.backend.service.ServiceResponse;
 import ch.pfaditools.choreManager.layout.MainLayout;
 import ch.pfaditools.choreManager.model.ChoreEntity;
+import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.Notifier;
+import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -16,13 +18,14 @@ import java.util.Optional;
 
 @Route(value = "chore", layout = MainLayout.class)
 @PermitAll
-public class ChoreView extends VerticalLayout implements HasDynamicTitle {
+public class ChoreView extends AbstractView implements HasDynamicTitle {
 
     private final IChoreEntityService choreService;
     private final Grid<ChoreEntity> choreGrid = new Grid<>();
     private final ChoreForm choreForm;
 
-    public ChoreView(IChoreEntityService choreService) {
+    public ChoreView(IChoreEntityService choreService, SecurityService securityService) {
+        super(securityService, "choreView");
         this.choreService = choreService;
         this.choreForm = new ChoreForm(this, choreService);
         setupLayout();

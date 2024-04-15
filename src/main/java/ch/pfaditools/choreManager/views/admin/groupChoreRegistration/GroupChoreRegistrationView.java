@@ -6,7 +6,9 @@ import ch.pfaditools.choreManager.backend.service.IGroupEntityService;
 import ch.pfaditools.choreManager.backend.service.ServiceResponse;
 import ch.pfaditools.choreManager.layout.MainLayout;
 import ch.pfaditools.choreManager.model.GroupChoreRegistrationEntity;
+import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.Notifier;
+import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -18,12 +20,17 @@ import java.util.Optional;
 
 @Route(value = "groupChoreRegistration", layout = MainLayout.class)
 @PermitAll
-public class GroupChoreRegistrationView extends VerticalLayout implements HasDynamicTitle {
+public class GroupChoreRegistrationView extends AbstractView implements HasDynamicTitle {
     private final IGroupChoreRegistrationEntityService groupRegistrationService;
     private final Grid<GroupChoreRegistrationEntity> grid = new Grid<>();
     private final GroupRegistrationForm groupRegistrationForm;
 
-    public GroupChoreRegistrationView(IGroupChoreRegistrationEntityService groupRegistrationService, IGroupEntityService groupService, IChoreEntityService choreService) {
+    public GroupChoreRegistrationView(
+            IGroupChoreRegistrationEntityService groupRegistrationService,
+            IGroupEntityService groupService,
+            IChoreEntityService choreService,
+            SecurityService securityService) {
+        super(securityService, "groupChoreRegistrationView");
         this.groupRegistrationService = groupRegistrationService;
         this.groupRegistrationForm = new GroupRegistrationForm(this, groupRegistrationService, groupService, choreService);
         setupLayout();

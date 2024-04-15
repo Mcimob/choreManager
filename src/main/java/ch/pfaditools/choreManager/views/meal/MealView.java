@@ -11,6 +11,7 @@ import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.DateUtils;
 import ch.pfaditools.choreManager.util.Notifier;
+import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -34,7 +35,7 @@ import java.util.Optional;
 
 @Route(value = "mealView", layout = MainLayout.class)
 @PermitAll
-public class MealView extends VerticalLayout implements HasDynamicTitle {
+public class MealView extends AbstractView implements HasDynamicTitle {
     private final SecurityService securityService;
     private final IMealSuggestionsEntityService mealService;
     private final IMealSuggestionVoteEntityService mealVoteService;
@@ -48,6 +49,7 @@ public class MealView extends VerticalLayout implements HasDynamicTitle {
     private final VerticalLayout suggestionLayout = new VerticalLayout();
     private final Div suggestionPickerLayout = new Div();
     public MealView(SecurityService securityService, IMealSuggestionsEntityService mealService, IMealSuggestionVoteEntityService mealVoteService) {
+        super(securityService, "mealView");
         this.securityService = securityService;
         this.mealService = mealService;
         this.mealVoteService = mealVoteService;

@@ -2,25 +2,22 @@ package ch.pfaditools.choreManager.layout;
 
 import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
+import ch.pfaditools.choreManager.util.HasLogger;
 import ch.pfaditools.choreManager.views.admin.chore.ChoreView;
 import ch.pfaditools.choreManager.views.admin.group.GroupView;
 import ch.pfaditools.choreManager.views.admin.groupChoreRegistration.GroupChoreRegistrationView;
-import ch.pfaditools.choreManager.views.main.MainView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.icon.SvgIcon;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import org.atmosphere.interceptor.AtmosphereResourceStateRecovery;
 
-public class MainLayout extends AppLayout {
+public class MainLayout extends AppLayout implements HasLogger {
     private final SecurityService securityService;
 
     public MainLayout(SecurityService securityService) {

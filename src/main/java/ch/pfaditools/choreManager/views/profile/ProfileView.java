@@ -5,6 +5,7 @@ import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.security.service.UserEntityDetailsService;
 import ch.pfaditools.choreManager.util.Notifier;
+import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Div;
@@ -18,7 +19,7 @@ import jakarta.annotation.security.PermitAll;
 
 @Route(value = "profileView", layout = MainLayout.class)
 @PermitAll
-public class ProfileView extends VerticalLayout implements HasDynamicTitle {
+public class ProfileView extends AbstractView implements HasDynamicTitle {
 
     private final SecurityService securityService;
     private final UserEntityDetailsService userService;
@@ -27,6 +28,7 @@ public class ProfileView extends VerticalLayout implements HasDynamicTitle {
     private final Button displayNameButton = new Button(getTranslation("profileView.displayName.button"));
 
     public ProfileView(SecurityService securityService, UserEntityDetailsService userService) {
+        super(securityService, "profileView");
         this.securityService = securityService;
         this.userService = userService;
         setupLayout();

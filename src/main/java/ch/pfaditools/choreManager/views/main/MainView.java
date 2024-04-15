@@ -10,7 +10,9 @@ import ch.pfaditools.choreManager.model.GroupEntity;
 import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.DateUtils;
+import ch.pfaditools.choreManager.util.HasLogger;
 import ch.pfaditools.choreManager.util.Notifier;
+import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.AbstractField;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -37,7 +39,7 @@ import java.util.Set;
 
 @Route(value = "", layout = MainLayout.class)
 @PermitAll
-public class MainView extends VerticalLayout implements HasDynamicTitle {
+public class MainView extends AbstractView implements HasDynamicTitle, HasLogger {
 
     private final static String[] weekdays = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
     private final IChoreRegistrationEntityService choreRegistrationService;
@@ -55,6 +57,7 @@ public class MainView extends VerticalLayout implements HasDynamicTitle {
     MainView(IChoreRegistrationEntityService choreRegistrationService,
              IGroupChoreRegistrationEntityService groupChoreRegistrationService,
              SecurityService securityService) {
+        super(securityService, "MainView");
         this.choreRegistrationService = choreRegistrationService;
         this. groupChoreRegistrationService = groupChoreRegistrationService;
         this.securityService = securityService;
