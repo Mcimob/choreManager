@@ -10,6 +10,7 @@ import ch.pfaditools.choreManager.model.MealSuggestionVoteEntity;
 import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.DateUtils;
+import ch.pfaditools.choreManager.util.HasLogger;
 import ch.pfaditools.choreManager.util.Notifier;
 import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.Key;
@@ -48,7 +49,9 @@ public class MealView extends AbstractView implements HasDynamicTitle {
     private final HorizontalLayout datePickerLayout = new HorizontalLayout();
     private final VerticalLayout suggestionLayout = new VerticalLayout();
     private final Div suggestionPickerLayout = new Div();
-    public MealView(SecurityService securityService, IMealSuggestionsEntityService mealService, IMealSuggestionVoteEntityService mealVoteService) {
+    public MealView(SecurityService securityService,
+                    IMealSuggestionsEntityService mealService,
+                    IMealSuggestionVoteEntityService mealVoteService) {
         super(securityService, "mealView");
         this.securityService = securityService;
         this.mealService = mealService;
@@ -153,11 +156,13 @@ public class MealView extends AbstractView implements HasDynamicTitle {
             ServiceResponse<MealSuggestionEntity> response = mealService.save(newMealSuggestion);
             if (!response.isOperationSuccessful()) {
                 Notifier.showErrorNotification(getTranslation(response.getErrorMessage()));
+                getLogger().error("{} failed to suggest new mealSuggestion {}", user, newMealSuggestion);
                 return;
             }
             Notifier.showSuccessNotification(getTranslation(response.getInfoMessage()));
             suggestionField.clear();
             updateMealSuggestions();
+            getLogger().info("{} successfully suggested a new mealSuggestion {}", user, newMealSuggestion);
         });
         addButton.addClickShortcut(Key.ENTER);
 
@@ -220,10 +225,12 @@ public class MealView extends AbstractView implements HasDynamicTitle {
                    if (!response.isOperationSuccessful()) {
                        Notifier.showErrorNotification(getTranslation(response.getErrorMessage()));
                        checkBox.setValue(change.getOldValue());
+                       getLogger().error("{} failed to vote for mealSuggestion {}", user, mealSuggestion);
                        return;
                    }
                    suggestionVote = Optional.of(response.getBusinessObjects().getFirst());
                    Notifier.showSuccessNotification(getTranslation(response.getInfoMessage()));
+                   getLogger().info("{} successfully voted for mealSuggestion {}", user, mealSuggestion);
 
                } else {
                    if (suggestionVote.isEmpty()) {
@@ -233,10 +240,12 @@ public class MealView extends AbstractView implements HasDynamicTitle {
                    if (!response.isOperationSuccessful()) {
                        Notifier.showErrorNotification(getTranslation(response.getErrorMessage()));
                        checkBox.setValue(change.getOldValue());
+                       getLogger().error("{} failed to un-vote for mealSuggestion {}", user, mealSuggestion);
                        return;
                    }
                    suggestionVote = Optional.empty();
                    Notifier.showSuccessNotification(getTranslation(response.getInfoMessage()));
+                   getLogger().info("{} successfully un-voted for mealSuggestion {}", user, mealSuggestion);
                }
                updateMealSuggestions();
             });

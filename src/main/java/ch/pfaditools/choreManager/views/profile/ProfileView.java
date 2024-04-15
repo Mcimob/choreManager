@@ -51,14 +51,15 @@ public class ProfileView extends AbstractView implements HasDynamicTitle {
     private void setupInputs() {
         displayNameButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         displayNameButton.addClickListener(click -> {
+            UserEntity user = securityService.getAuthenticatedUser().get();
             if (displayNameField.getValue().isEmpty()) {
                 Notifier.showErrorNotification(getTranslation("profileView.displayName.error.empty"));
                 return;
             }
-            UserEntity user = securityService.getAuthenticatedUser().get();
             user.setDisplayName(displayNameField.getValue());
             userService.saveUserWithoutPassword(user);
             Notifier.showSuccessNotification(getTranslation("profileView.displayName.message.save"));
+            getLogger().info("{} successfully changed their displayName to  {}", user, displayNameField.getValue());
         });
     }
 

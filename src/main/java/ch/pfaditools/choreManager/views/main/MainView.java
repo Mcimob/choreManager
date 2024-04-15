@@ -39,7 +39,7 @@ import java.util.Set;
 
 @Route(value = "", layout = MainLayout.class)
 @PermitAll
-public class MainView extends AbstractView implements HasDynamicTitle, HasLogger {
+public class MainView extends AbstractView implements HasDynamicTitle {
 
     private final static String[] weekdays = {"Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"};
     private final IChoreRegistrationEntityService choreRegistrationService;
@@ -204,19 +204,22 @@ public class MainView extends AbstractView implements HasDynamicTitle, HasLogger
         private void setupCheckBox() {
             check.setValue(personalRegistration.isPresent());
             check.addValueChangeListener(change -> {
+                UserEntity user = securityService.getAuthenticatedUser().get();
                if (change.getValue()) {
                    ChoreRegistrationEntity newReg = new ChoreRegistrationEntity();
-                   newReg.setUser(securityService.getAuthenticatedUser().get());
+                   newReg.setUser(user);
                    newReg.setDate(date);
                    newReg.setGroupChoreRegistration(groupRegistration);
 
                    ServiceResponse<ChoreRegistrationEntity> response = choreRegistrationService.save(newReg);
                    if (!response.isOperationSuccessful()) {
                        Notifier.showErrorNotification(getTranslation(response.getErrorMessage()));
+                       getLogger().error("{} failed to sign up to chore={}, date={}", user, groupRegistration.getChore().getName(), date);
                        return;
                    }
                    Notifier.showSuccessNotification(getTranslation(response.getInfoMessage()));
                    personalRegistration = Optional.of(response.getBusinessObjects().get(0));
+                   getLogger().info("{} successfully signed up to chore={}, date={}", user, groupRegistration.getChore().getName(), date);
                } else {
                    if (personalRegistration.isEmpty()) {
                        Notifier.showErrorNotification(getTranslation("mainView.error.noRegistrationToDelete"));
@@ -225,11 +228,13 @@ public class MainView extends AbstractView implements HasDynamicTitle, HasLogger
                    ServiceResponse<ChoreRegistrationEntity> response =
                            choreRegistrationService.delete(personalRegistration.get());
                    if (!response.isOperationSuccessful()) {
+                       getLogger().error("{} failed to deregister from chore={}, date={}", user, groupRegistration.getChore().getName(), date);
                        Notifier.showErrorNotification(getTranslation(response.getErrorMessage()));
                        return;
                    }
                    Notifier.showSuccessNotification(getTranslation(response.getInfoMessage()));
                     personalRegistration = Optional.empty();
+                   getLogger().info("{} successfully deregistered from chore={}, date={}", user, groupRegistration.getChore().getName(), date);
                }
                updateRegistrationCount(change.getValue());
             });

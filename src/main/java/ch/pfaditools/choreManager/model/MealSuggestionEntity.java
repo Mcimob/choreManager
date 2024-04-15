@@ -73,4 +73,13 @@ public class MealSuggestionEntity extends AbstractEntity {
     public int hashCode() {
         return Objects.hash(getName(), getSuggestedDate(), getId());
     }
+
+    @Override
+    public String toString() {
+        return "MealSuggestionEntity{" +
+                "id='" + getId() + '\'' +
+                "name='" + name + '\'' +
+                ", suggestedDate=" + suggestedDate +
+                '}';
+    }
 }
