@@ -109,9 +109,4 @@ public class ChoreRegistrationEntityService implements IChoreRegistrationEntityS
         }
         return response;
     }
-
-    private void catchException(ServiceResponse<ChoreRegistrationEntity> response, Exception e) {
-        response.setOperationSuccessful(false);
-        response.setErrorMessage("choreRegistrationEntityService.error.general");
-    }
 }

@@ -140,9 +140,4 @@ public class MealSuggestionEntityService implements IMealSuggestionsEntityServic
         }
         return response;
     }
-
-    private void catchException(ServiceResponse<MealSuggestionEntity> response, Exception e) {
-        response.setOperationSuccessful(false);
-        response.setErrorMessage("mealSuggestionEntityService.error.general");
-    }
 }

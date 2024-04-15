@@ -10,7 +10,6 @@ import ch.pfaditools.choreManager.model.MealSuggestionVoteEntity;
 import ch.pfaditools.choreManager.model.UserEntity;
 import ch.pfaditools.choreManager.security.SecurityService;
 import ch.pfaditools.choreManager.util.DateUtils;
-import ch.pfaditools.choreManager.util.HasLogger;
 import ch.pfaditools.choreManager.util.Notifier;
 import ch.pfaditools.choreManager.views.AbstractView;
 import com.vaadin.flow.component.Key;

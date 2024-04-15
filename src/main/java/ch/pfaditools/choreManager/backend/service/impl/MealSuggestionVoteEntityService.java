@@ -139,9 +139,4 @@ public class MealSuggestionVoteEntityService implements IMealSuggestionVoteEntit
         }
         return response;
     }
-
-    private void catchException(ServiceResponse<MealSuggestionVoteEntity> response, Exception e) {
-        response.setOperationSuccessful(false);
-        response.setErrorMessage("mealSuggestionVoteEntityService.error.general");
-    }
 }

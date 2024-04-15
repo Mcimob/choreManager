@@ -141,9 +141,4 @@ public class GroupChoreRegistrationEntityService implements IGroupChoreRegistrat
         }
         return response;
     }
-
-    private void catchException(ServiceResponse<GroupChoreRegistrationEntity> response, Exception e) {
-        response.setOperationSuccessful(false);
-        response.setErrorMessage("groupChoreRegistrationEntityService.error.general");
-    }
 }

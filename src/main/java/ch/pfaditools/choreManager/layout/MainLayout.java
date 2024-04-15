@@ -17,7 +17,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
-public class MainLayout extends AppLayout implements HasLogger {
+public class MainLayout extends AppLayout {
     private final SecurityService securityService;
 
     public MainLayout(SecurityService securityService) {

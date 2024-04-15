@@ -135,9 +135,4 @@ public class GroupEntityService implements IGroupEntityService {
         }
         return response;
     }
-
-    private void catchException(ServiceResponse<GroupEntity> response, Exception e) {
-        response.setOperationSuccessful(false);
-        response.setErrorMessage("groupEntityService.error.general");
-    }
 }

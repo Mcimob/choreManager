@@ -108,9 +108,4 @@ public class ChoreEntityService implements IChoreEntityService {
         }
         return response;
     }
-
-    private void catchException(ServiceResponse<ChoreEntity> response, Exception e) {
-        response.setOperationSuccessful(false);
-        response.setErrorMessage("choreEntityService.error.general");
-    }
 }
