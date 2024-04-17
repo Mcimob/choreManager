@@ -2,9 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
+    branches: [ "develop", "main" ]
 
 jobs:
   build_and_push:
@@ -19,10 +17,12 @@ jobs:
         registry: ${{ secrets.REGISTRY_URL}}
         username: ${{ secrets.REGISTRY_USERNAME }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
+    - name: Get current branch
+      run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
         file: Dockerfile
         push: true
-        tags: '${{ secrets.REGISTRY_URL }}/choreManager/dev:latest'
+        tags: '${{ secrets.REGISTRY_URL }}/chore-manager/${{ env.BRANCH }}:latest'
 
