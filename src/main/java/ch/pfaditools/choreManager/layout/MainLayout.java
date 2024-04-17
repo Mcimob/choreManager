@@ -16,12 +16,17 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+import org.springframework.beans.factory.annotation.Value;
 
 public class MainLayout extends AppLayout {
     private final SecurityService securityService;
 
-    public MainLayout(SecurityService securityService) {
+    private final String applicationTitle;
+
+    public MainLayout(SecurityService securityService,
+                      @Value("${application.title}") String applicationTitle) {
         this.securityService = securityService;
+        this.applicationTitle = applicationTitle;
         UserEntity user = securityService.getAuthenticatedUser().get();
         createHeader();
         if ("ADMIN".equals(user.getRole())) {
@@ -73,6 +78,7 @@ public class MainLayout extends AppLayout {
             VerticalLayout adminLayout = new VerticalLayout();
             VerticalLayout adminItems = new VerticalLayout();
 
+            adminLayout.add(new Div(applicationTitle));
             adminLayout.add(new Div(getTranslation("layout.admin")));
             adminLayout.add(adminItems);
 
