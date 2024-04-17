@@ -12,7 +12,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Registry login
-      uses: docker/login-action@v1
+      uses: docker/login-action@v3
       with:
         registry: ${{ secrets.REGISTRY_URL}}
         username: ${{ secrets.REGISTRY_USERNAME }}
@@ -20,7 +20,7 @@ jobs:
     - name: Get current branch
       run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
     - name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v5
       with:
         file: Dockerfile
         push: true
